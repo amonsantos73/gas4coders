@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import * as yup from 'yup';
 
 const SignUp = ({ toggleAuthMode }) => {
@@ -22,14 +23,26 @@ const SignUp = ({ toggleAuthMode }) => {
     try {
       await schema.validate({ email, username, password, confirmPassword }, { abortEarly: false });
       console.log('Cadastro válido:', { email, username, password, confirmPassword });
-      // Aqui você pode prosseguir com o envio dos dados de cadastro
+      await axios.post('http://localhost:3000/create', {
+        email,
+        username,
+        password
+      });
       setErrors({});
     } catch (err) {
-      const validationErrors = {};
-      err.inner.forEach(error => {
-        validationErrors[error.path] = error.message;
-      });
-      setErrors(validationErrors);
+      if (err.name === 'ValidationError') {
+        const validationErrors = {};
+        err.inner.forEach(error => {
+          validationErrors[error.path] = error.message;
+        });
+        setErrors(validationErrors);
+      } else if (err.response) {
+        console.error('Erro na resposta do servidor:', err.response.data);
+      } else if (err.request) {
+        console.error('Erro na requisição:', err.request);
+      } else {
+        console.error('Erro:', err.message);
+      }
     }
   };
 
