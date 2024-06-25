@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import * as yup from 'yup';
 
-const Login = ({ toggleAuthMode }) => {
+const Login = ({ toggleAuthMode, onLoginSuccess }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
@@ -17,13 +18,19 @@ const Login = ({ toggleAuthMode }) => {
     try {
       await schema.validate({ username, password }, { abortEarly: false });
       console.log('Login válido:', { username, password });
-      // Aqui você pode prosseguir com a autenticação ou outra lógica necessária
+
+      const response = await axios.post('http://localhost:3000/login', { username, password });
+      console.log('Resposta do servidor:', response.data);
+
       setErrors({});
+      onLoginSuccess(); // Chama a função para atualizar o estado de autenticação no componente pai
     } catch (err) {
       const validationErrors = {};
-      err.inner.forEach(error => {
-        validationErrors[error.path] = error.message;
-      });
+      if (err.inner) {
+        err.inner.forEach(error => {
+          validationErrors[error.path] = error.message;
+        });
+      }
       setErrors(validationErrors);
     }
   };
