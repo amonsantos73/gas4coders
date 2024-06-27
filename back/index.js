@@ -2,30 +2,28 @@ const express = require('express');
 const fs = require('fs');
 const cors = require('cors');
 const path = require('path');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 // Definir rota POST para /login
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
-    fs.readFile(path.join(__dirname, 'db', 'banco-dados-usuario.json'), 'utf8', (err, data) => {
+    fs.readFile(path.join(__dirname, 'db', 'banco-dados-usuario.json'), 'utf8', async (err, data) => {
         if (err) {
             console.error('Erro de leitura de arquivo', err);
             return res.status(500).json('Erro de servidor');
         }
-
-        // Conversão de JSON para um objeto JavaScript
         const users = JSON.parse(data);
 
-        // Verificação da existência do email logado
-        const existUser = users.find(u => u.username === username);
-        if (existUser) {
-            // Verifica se a senha bate com o email
-            const loginValid = users.find(u => u.username === username && u.password === password);
-            if (loginValid) {
+        const user = users.find(u => u.username === username);
+        if (user) {
+            const passwordValidado = await bcrypt.compare(password, user.password);
+            if (passwordValidado) {
                 res.status(200).json('Autenticação concluída com sucesso');
             } else {
                 res.status(401).json('Usuário ou senha incorretos');
@@ -36,11 +34,11 @@ app.post('/login', (req, res) => {
     });
 });
 
-app.post('/create', (req, res) => {
+app.post('/create', async (req, res) => {
     const { username, email, password } = req.body;
     console.log('cheguei no create', { username, email, password });
 
-    fs.readFile(path.join(__dirname, 'db', 'banco-dados-usuario.json'), 'utf8', (err, data) => {
+    fs.readFile(path.join(__dirname, 'db', 'banco-dados-usuario.json'), 'utf8', async (err, data) => {
         if (err) {
             console.error('Erro ao ler arquivo', err);
             return res.status(500).json('Erro no servidor');
@@ -59,7 +57,10 @@ app.post('/create', (req, res) => {
         const maxId = users.reduce((max, user) => (user.id > max ? user.id : max), 0);
         const newId = maxId + 1;
 
-        users.push({ id: newId, username, email, password });
+        const salt = await bcrypt.genSalt(10);
+        const passwordCrypt = await bcrypt.hash(password, salt);
+
+        users.push({ id: newId, username, email, password: passwordCrypt });
 
         fs.writeFile(path.join(__dirname, 'db', 'banco-dados-usuario.json'), JSON.stringify(users, null, 2), 'utf8', (err) => {
             if (err) {

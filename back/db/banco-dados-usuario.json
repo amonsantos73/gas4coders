@@ -4,5 +4,11 @@
     "username": "amonsantos73",
     "email": "amonlemes3@gmail.com",
     "password": "12345"
+  },
+  {
+    "id": 2,
+    "username": "reimberg",
+    "email": "pedro.reimberg.oliveira@gmail.com",
+    "password": "$2b$10$/S/CaDufmsmLk08hPVoDpuVJ7C7Jd5tZI27BmQzlsr2lOFhjXStKS"
   }
 ]
