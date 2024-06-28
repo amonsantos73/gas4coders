@@ -57,7 +57,7 @@ const Navbar = ({ setActiveTab, onLogout }) => {
                 {/* Current: "bg-gray-800 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
                 <button
                   onClick={() => setActiveTab('favorites')}
-                  className="bg-gray-800 text-white px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                 >
                   My Favorites
                 </button>
