@@ -78,7 +78,7 @@ const CoffeeCarousel = ({ coffees }) => {
       <div className="w-full max-w-4xl">
         <Slider {...settings} className="text-center">
           {coffees.map(coffee => (
-            <div key={coffee._id} className="px-2 h-96">
+            <div key={coffee._id} className="h-96">
               <CoffeeCard coffee={coffee} />
             </div>
           ))}
