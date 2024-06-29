@@ -1,20 +1,9 @@
 [
   {
     "id": 1,
-    "username": "amonsantos73",
-    "email": "amonlemes3@gmail.com",
-    "password": "12345"
-  },
-  {
-    "id": 2,
     "username": "reimberg",
-    "email": "pedro.reimberg.oliveira@gmail.com",
-    "password": "$2b$10$/S/CaDufmsmLk08hPVoDpuVJ7C7Jd5tZI27BmQzlsr2lOFhjXStKS"
-  },
-  {
-    "id": 3,
-    "username": "amonsantos_",
-    "email": "amonlsantos@gmail.com",
-    "password": "$2b$10$8ERKWJ7.UuIrfqYEFAotAet7YW2Azw.YVrOfo11.B5YMyoS52ofrm"
+    "email": "d2023006537@unifei.edu.br",
+    "password": "$2b$10$bAh825poZxmusptYc5LVcOcw.V3vfHDCyp0TI1XJF8ynuJ4GhvgpG",
+    "favoritos": []
   }
 ]
