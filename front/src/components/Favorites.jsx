@@ -1,11 +1,12 @@
 // Favorites.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import CoffeeCarousel from './CoffeeCarousel';
 
-const Favorites = () => {
+const Favorites = ({ favorites, userId }) => {;
+
   return (
     <div>
-      <h1>My Favorites</h1>
-      <p>Lista dos seus cafés favoritos.</p>
+      <h1>Your favorites</h1>
     </div>
   );
 };

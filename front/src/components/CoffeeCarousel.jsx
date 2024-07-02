@@ -1,12 +1,14 @@
-import React from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import CoffeeCard from './CoffeeCard';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+// CoffeeCarousel.jsx
 
-const CoffeeCarousel = ({ coffees }) => {
+import React from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import CoffeeCard from "./CoffeeCard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+
+const CoffeeCarousel = ({ coffees, userId, favorites }) => {
   const settings = {
     dots: false,
     infinite: true,
@@ -15,7 +17,7 @@ const CoffeeCarousel = ({ coffees }) => {
     slidesToScroll: 1,
     autoplay: false,
     centerMode: true,
-    centerPadding: '0',
+    centerPadding: "0",
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [
@@ -27,8 +29,8 @@ const CoffeeCarousel = ({ coffees }) => {
           infinite: true,
           dots: false,
           centerMode: true,
-          centerPadding: '0'
-        }
+          centerPadding: "0",
+        },
       },
       {
         breakpoint: 768,
@@ -37,10 +39,10 @@ const CoffeeCarousel = ({ coffees }) => {
           slidesToScroll: 1,
           initialSlide: 0,
           centerMode: true,
-          centerPadding: '0'
-        }
-      }
-    ]
+          centerPadding: "0",
+        },
+      },
+    ],
   };
 
   function NextArrow(props) {
@@ -49,7 +51,7 @@ const CoffeeCarousel = ({ coffees }) => {
       <div className="absolute top-0 bottom-0 right-0 flex items-center">
         <button
           type="button"
-          onClick={onClick} // Passa o onClick diretamente para o botão
+          onClick={onClick}
           className="text-gray-600 hover:text-red-500 focus:outline-none"
         >
           <FontAwesomeIcon icon={faArrowRight} className="text-2xl" />
@@ -64,7 +66,7 @@ const CoffeeCarousel = ({ coffees }) => {
       <div className="absolute top-0 bottom-0 left-0 flex items-center">
         <button
           type="button"
-          onClick={onClick} // Passa o onClick diretamente para o botão
+          onClick={onClick}
           className="text-gray-600 hover:text-red-500 focus:outline-none"
         >
           <FontAwesomeIcon icon={faArrowLeft} className="text-2xl" />
@@ -77,10 +79,13 @@ const CoffeeCarousel = ({ coffees }) => {
     <div className="w-full flex justify-center">
       <div className="w-full max-w-4xl">
         <Slider {...settings} className="text-center">
-          {coffees.map(coffee => (
-            <div key={coffee._id} className="h-96">
-              <CoffeeCard coffee={coffee} />
-            </div>
+          {coffees.map((coffee) => (
+            <CoffeeCard
+              key={coffee._id}
+              coffee={coffee}
+              isFavorited={favorites.includes(coffee._id)}
+              userId={userId}
+            />
           ))}
         </Slider>
       </div>
