@@ -23,7 +23,12 @@ const CoffeeCard = ({ coffee, isFavorited, userId }) => {
       });
   
       if (response.status === 200) {
-        console.log(`Favorited the coffee ${name}`);
+        if (favorite) {
+          console.log(`Unfavorited the coffee ${name}`);
+        } else {
+          console.log(`Favorited the coffee ${name}`);
+        }
+  
       } else {
         console.error('Failed to favorite the coffee');
       }

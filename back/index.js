@@ -110,8 +110,20 @@ app.post('/add/favorites', async (req, res) => {
                 res.status(200).json('Café favoritado com sucesso.');
             });
         } else {
-            console.log('Café já está na lista de favoritos para userId:', userId);
-            res.status(400).json('Café já está na lista de favoritos');
+            const coffeeIndex = user.favorites.indexOf(coffeeId);
+
+            user.favorites.splice(coffeeIndex, 1);
+
+
+            fs.writeFile(path.join(__dirname, 'db', 'banco-dados-usuario.json'), JSON.stringify(users, null, 2), 'utf8', (err) => {
+                if (err) {
+                    console.error('Erro ao escrever arquivo', err);
+                    return res.status(500).json("Erro no servidor");
+                }
+            
+                console.log('Café removido dos favoritos com sucesso para userId:', userId);
+                return res.status(200).json('Café removido dos favoritos com sucesso.');
+            });     
         }
     });
 });
