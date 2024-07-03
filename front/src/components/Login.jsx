@@ -17,13 +17,11 @@ const Login = ({ toggleAuthMode, onLoginSuccess }) => {
 
     try {
       await schema.validate({ username, password }, { abortEarly: false });
-      console.log('Login válido:', { username, password });
 
       const response = await axios.post('http://localhost:3000/login', { username, password });
       console.log('Resposta do servidor:', response.data);
-
       setErrors({});
-      onLoginSuccess(); // Chama a função para atualizar o estado de autenticação no componente pai
+      onLoginSuccess(response.data.userId, response.data.favorites); // Aqui está passando userId e favorites
     } catch (err) {
       const validationErrors = {};
       if (err.inner) {
@@ -36,8 +34,16 @@ const Login = ({ toggleAuthMode, onLoginSuccess }) => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+      <p className="text-3xl text-slate-50 text-center mb-6">
+        Welcome to Gas 4 Coders
+      </p>
       <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-md rounded-lg dark:bg-gray-800">
+        <div className="flex justify-center mb-4">
+          <div className="">
+            <img src="/gas4coders-newlogo.png" alt="Logo" className="h-32 w-32" />
+          </div>
+        </div>
         <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-gray-100">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>

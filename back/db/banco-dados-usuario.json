@@ -1,20 +1,21 @@
 [
   {
-    "id": 1,
+    "userId": 1,
     "username": "amonsantos73",
     "email": "amonlemes3@gmail.com",
-    "password": "12345"
+    "password": "$2b$10$I5MxrA3/LnZkbMiCujEeAek6XE/WA3/bSh2SLZY1C6HnZU3LP2vWe",
+    "favorites": [
+      "6424335b59f9f6fdd657d2e1",
+      "6424338959f9f6fdd657d2e3",
+      "6424338559f9f6fdd657d2e2",
+      "6424352d59f9f6fdd657d2e6"
+    ]
   },
   {
-    "id": 2,
+    "userId": 2,
     "username": "reimberg",
-    "email": "pedro.reimberg.oliveira@gmail.com",
-    "password": "$2b$10$/S/CaDufmsmLk08hPVoDpuVJ7C7Jd5tZI27BmQzlsr2lOFhjXStKS"
-  },
-  {
-    "id": 3,
-    "username": "amonsantos_",
-    "email": "amonlsantos@gmail.com",
-    "password": "$2b$10$8ERKWJ7.UuIrfqYEFAotAet7YW2Azw.YVrOfo11.B5YMyoS52ofrm"
+    "email": "d2023006537@unifei.edu.br",
+    "password": "$2b$10$o3aNv4raGI8rFiBTht.Cc.eQrUcH6SgMPE9q0n5OT3wybVbZDd5e6",
+    "favorites": []
   }
 ]
