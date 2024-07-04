@@ -13,10 +13,10 @@ const CoffeeCard = ({ coffee, isFavorited, userId }) => {
   const { _id, name, grind_option, region, flavor_profile, image_url } = coffee;
 
   const handleFavoriteClick = async () => {
-    setFavorite(!favorite);
+    const newFavoriteState = !favorite;
+    setFavorite(newFavoriteState);
   
     try {
-      console.log(userId); 
       const response = await axios.post('http://localhost:3000/add/favorites', {
         coffeeId: _id,
         userId,
@@ -31,12 +31,13 @@ const CoffeeCard = ({ coffee, isFavorited, userId }) => {
   
       } else {
         console.error('Failed to favorite the coffee');
+        setFavorite(!newFavoriteState); // cancela a mudança de estado caso dê errado
       }
     } catch (error) {
       console.error('Error:', error.message);
+      setFavorite(!newFavoriteState); // cancela a mudança de estado caso dê errado
     }
   };
-  
 
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg mx-auto bg-gray-800 h-full">

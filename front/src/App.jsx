@@ -62,7 +62,7 @@ const App = () => {
   const renderContent = () => {
     switch (activeTab) {
       case 'favorites':
-        return <Favorites favorites={favorites} userId={userId} updateFavorites={updateFavorites} use />;
+        return <Favorites favorites={favorites} coffees={coffeesData} userId={userId} updateFavorites={updateFavorites} />;
       case 'carousel':
         return <CoffeeCarousel coffees={coffeesData} favorites={favorites} userId={userId} />;
       case 'all':
