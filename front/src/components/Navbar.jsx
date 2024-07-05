@@ -1,4 +1,3 @@
-// Navbar.jsx
 import React from 'react';
 
 const Navbar = ({ setActiveTab, onLogout }) => {
