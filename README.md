@@ -53,11 +53,11 @@ Este projeto está licenciado sob a licença MIT. Veja o arquivo LICENSE para ma
 ## Contato
 Se você tiver alguma dúvida ou sugestão, sinta-se à vontade para entrar em contato:
 
- Amon Santos
+ ### Amon Santos
 
 * Email: amonlsantos.cp@gmail.com
 * GitHub: amonsantos73
-Pedro Reimberg
+### Pedro Reimberg
 
 * Email: pedro.reimberg.oliveira@gmail.com
 * GitHub: reimbazz
