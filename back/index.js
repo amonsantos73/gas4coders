@@ -128,6 +128,25 @@ app.post('/add/favorites', async (req, res) => {
     });
 });
 
+app.get('/user/:userId/favorites', (req, res) => {
+    const userId = parseInt(req.params.userId);
+
+    fs.readFile(path.join(__dirname, 'db', 'banco-dados-usuario.json'), 'utf8', (err, data) => {
+        if (err) {
+            console.error('Erro ao ler arquivo', err);
+            return res.status(500).json('Erro no servidor');
+        }
+
+        let users = JSON.parse(data);
+        const user = users.find(u => u.userId === userId);
+
+        if (!user) {
+            return res.status(404).json('Usuário não encontrado');
+        }
+
+        res.status(200).json({ favorites: user.favorites });
+    });
+});
 
 
 app.listen(3000, () => {

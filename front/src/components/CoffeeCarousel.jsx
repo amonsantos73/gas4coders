@@ -1,6 +1,4 @@
-// CoffeeCarousel.jsx
-
-import React from "react";
+import React, { useRef } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -9,6 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 const CoffeeCarousel = ({ coffees, userId, favorites }) => {
+  const sliderRef = useRef(null);
+
   const settings = {
     dots: false,
     infinite: true,
@@ -18,8 +18,6 @@ const CoffeeCarousel = ({ coffees, userId, favorites }) => {
     autoplay: false,
     centerMode: true,
     centerPadding: "0",
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
     responsive: [
       {
         breakpoint: 1024,
@@ -45,49 +43,34 @@ const CoffeeCarousel = ({ coffees, userId, favorites }) => {
     ],
   };
 
-  function NextArrow(props) {
-    const { onClick } = props;
-    return (
-      <div className="absolute top-0 bottom-0 right-0 flex items-center">
-        <button
-          type="button"
-          onClick={onClick}
-          className="text-gray-600 hover:text-red-500 focus:outline-none"
-        >
-          <FontAwesomeIcon icon={faArrowRight} className="text-2xl" />
-        </button>
-      </div>
-    );
-  }
-
-  function PrevArrow(props) {
-    const { onClick } = props;
-    return (
-      <div className="absolute top-0 bottom-0 left-0 flex items-center">
-        <button
-          type="button"
-          onClick={onClick}
-          className="text-gray-600 hover:text-red-500 focus:outline-none"
-        >
-          <FontAwesomeIcon icon={faArrowLeft} className="text-2xl" />
-        </button>
-      </div>
-    );
-  }
-
   return (
-    <div className="w-full flex justify-center">
-      <div className="w-full max-w-4xl">
-        <Slider {...settings} className="text-center">
-          {coffees.map((coffee) => (
-            <CoffeeCard
-              key={coffee._id}
-              coffee={coffee}
-              isFavorited={favorites.includes(coffee._id)}
-              userId={userId}
-            />
-          ))}
-        </Slider>
+    <div className="w-full flex flex-col items-center">
+      <h2 className="col-span-full text-center text-2xl font-bold text-gray-300">Overview</h2>
+      <div className="flex justify-center items-center w-full">
+        <button
+          type="button"
+          onClick={() => sliderRef.current.slickPrev()}
+          className="text-gray-600 hover:text-red-500 focus:outline-none mr-2"
+        >
+        </button>
+        <div className="w-full max-w-4xl">
+          <Slider ref={sliderRef} {...settings} className="text-center">
+            {coffees.map((coffee) => (
+              <CoffeeCard
+                key={coffee._id}
+                coffee={coffee}
+                isFavorited={favorites.includes(coffee._id)}
+                userId={userId}
+              />
+            ))}
+          </Slider>
+        </div>
+        <button
+          type="button"
+          onClick={() => sliderRef.current.slickNext()}
+          className="text-gray-600 hover:text-red-500 focus:outline-none ml-2"
+        >
+        </button>
       </div>
     </div>
   );

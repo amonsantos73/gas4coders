@@ -10,7 +10,7 @@ const App = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
   const [userId, setUserId] = useState(null);
-  const [favorites, setFavorites] = useState([]); 
+  const [favorites, setFavorites] = useState([]);
   const [coffeesData, setCoffeesData] = useState([]);
   const [activeTab, setActiveTab] = useState('carousel');
 
@@ -22,6 +22,7 @@ const App = () => {
           throw new Error('Erro ao carregar os dados');
         }
         const data = await response.json();
+        console.log(data)
         setCoffeesData(data);
       } catch (error) {
         console.error('Erro ao carregar os dados:', error.message);
@@ -31,26 +32,36 @@ const App = () => {
     fetchCoffeeData();
   }, []);
 
-  
   useEffect(() => {
-    const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    setFavorites(storedFavorites);
-  }, []);
+    if (activeTab === 'favorites' && authenticated && userId) {
+      fetchFavorites();
+    }
+  }, [activeTab, authenticated, userId]);
 
-  
+  const fetchFavorites = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/user/${userId}/favorites`);
+      if (!response.ok) {
+        throw new Error('Erro ao carregar os favoritos');
+      }
+      const data = await response.json();
+      setFavorites(data.favorites);
+    } catch (error) {
+      console.error('Erro ao carregar os favoritos:', error.message);
+    }
+  };
+
   const updateFavorites = (newFavorites) => {
     setFavorites(newFavorites);
     localStorage.setItem('favorites', JSON.stringify(newFavorites));
   };
 
-  
   const handleLoginSuccess = (userId, userFavorites) => {
     setAuthenticated(true);
     setUserId(userId);
-    updateFavorites(userFavorites)
+    updateFavorites(userFavorites);
   };
 
-  
   const handleLogout = () => {
     setAuthenticated(false);
     setActiveTab(null);
@@ -66,7 +77,7 @@ const App = () => {
       case 'carousel':
         return <CoffeeCarousel coffees={coffeesData} favorites={favorites} userId={userId} />;
       case 'all':
-        return <CoffeeGallery coffees={coffeesData} favorites={favorites} userId={userId}/>;
+        return <CoffeeGallery coffees={coffeesData} favorites={favorites} userId={userId} />;
       default:
         return <CoffeeCarousel coffees={coffeesData} favorites={favorites} userId={userId} />;
     }
