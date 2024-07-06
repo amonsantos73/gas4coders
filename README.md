@@ -46,7 +46,7 @@ Siga os passos abaixo para configurar o projeto localmente:
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/gas4coders.git
+   git clone https://github.com/amonsantos73/gas4coders.git
 ## Licença
 Este projeto está licenciado sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
 
